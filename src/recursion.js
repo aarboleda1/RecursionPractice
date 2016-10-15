@@ -376,34 +376,156 @@ input - string, output - array
 the array and the string returns will have the same length
 
 */
-// // 17. Reverse the order of an array
-// var reverseArr = function (array) {
-// };
+// 17. Reverse the order of an array
+var reverseArr = function (array, front, back, newArray) {
+	var length = array.length;
+	front = front || 0;
+	newArray = newArray || [];
+	back = back || array.length - 1;
+	//base case
+	if(front === Math.round(length/2 - 1) || front === Math.round(length/2)){
+		newArray[front] = array[back]
+	    newArray[back] = array[front]
+		return newArray;
+	}
+	//do
+	//console.log(front)
+	//console.log(array[back])
 
-// // 18. Create a new array with a given value and length.
-// // buildList(0,5) // [0,0,0,0,0]
-// // buildList(7,3) // [7,7,7]
-// var buildList = function(value, length) {
-// };
+	newArray[back] = array[front]
+	//console.log(front)
+	newArray[front] = array[back]
+	//console.log(array[back])
+	front++;
+	back--;
+	//recursive case
+	return reverseArr(array, front, back, newArray);
 
-// // 19. Count the occurence of a value inside a list.
-// // countOccurrence([2,7,4,4,1,4], 4) // 3
-// // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-// var countOccurrence = function(array, value) {
-// };
+};
+//[1,2,3] [3,2,1]
+/*PC
+have 2 variables to save save the index which were going to change
+pass those variables down
+replace each place of the string with each variable
+once the variable number is equal to half the distance of the array 
+or half the distance -1
+the array will be reversed
+slice method
+[1,2,3]
 
-// // 20. Write a recursive version of map.
-// // rMap([1,2,3], timesTwo); // [2,4,6]
-// var rMap = function(array, callback) {
-// };
 
-// // 21. Write a function that counts the number of times a key occurs in an object.
-// // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
-// // countKeysInObj(testobj, 'r') // 1
-// // countKeysInObj(testobj, 'e') // 2
-// var countKeysInObj = function(obj, key) {
-// };
+AS
+*/
 
+// 18. Create a new array with a given value and length.
+// buildList(0,5) // [0,0,0,0,0]
+// buildList(7,3) // [7,7,7]
+var buildList = function(value, length, count, array) {
+	count = count || 0;
+	array = array || [];
+	array[count] = value;
+	if( count === length -1 ){
+		return array;
+	}
+	count++
+	return buildList(value, length, count, array) 
+};
+/*
+PC
+create a count and an empty array that will be built
+count = 0
+array[count] is equal to value
+once count is equal to length
+return the array
+*/
+// 19. Count the occurence of a value inside a list.
+// countOccurrence([2,7,4,4,1,4], 4) // 3
+// countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
+var countOccurrence = function(array, value, count, occurences) {
+	count = count || 0;
+	occurences = occurences || 0;
+	if(count === array.length ){
+		return occurences
+	}
+
+	if(array[count] === value){
+		occurences++
+	}
+	if( array[count] !== undefined && array[count] !== null && array[count].toString() === 'NaN' && value.toString() === 'NaN'){
+		occurences++
+	}
+
+	count++
+
+	return countOccurrence(array, value, count, occurences)
+};
+/*
+PC
+Should return a number
+increment occurences
+if the array[count] is equal to value
+increment occurences
+once count is equal to array.length
+return occurences
+
+
+*/
+// 20. Write a recursive version of map.
+// rMap([1,2,3], timesTwo); // [2,4,6]
+var rMap = function(array, callback, count, mappedArray) {
+	count = count || 0;
+	mappedArray = mappedArray || [];
+	mappedArray[count] = callback(array[count])
+
+	if(count === array.length - 1){
+		return mappedArray;
+	}
+	count++
+
+	return rMap(array, callback, count, mappedArray)
+};
+
+// 21. Write a function that counts the number of times a key occurs in an object.
+// var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
+// countKeysInObj(testobj, 'r') // 1
+// countKeysInObj(testobj, 'e') // 2
+var countKeysInObj = function(obj, key, count, level) {
+  	count = count || [];
+  	lovel = level || 0;
+  	// for(var prop in obj){
+  	// 	if( prop === key ){
+  	// 		count++
+  	// 	}
+
+  	// 	 if ( typeof obj[prop] === 'object' && obj[prop].hasOwnProperty(key)){
+  	// 		console.log('yo')
+  	// 		countKeysInObj(obj[prop], key, count)
+  	// 	}
+
+
+  	// }
+
+  	// return count;
+  
+    count[level] = count[level] || 0;
+    for (var k in obj) {
+        obj.hasOwnProperty(k) && count[level]++;
+        typeof obj[k] === 'object' && countKeysInObj(obj[k], level + 1);
+    }
+};
+/*PC
+input wil be an obj
+ouptut to be a number
+{'a': 1, 'a': 2}
+check to see if it is an object
+if a property exists of the key
+add it to the value
+check if the value is an object
+check its keys
+so on
+
+
+*/
 // // 22. Write a function that counts the number of times a value occurs in an object.
 // // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
 // // countValuesInObj(testobj, 'r') // 2

@@ -699,8 +699,8 @@
         expect(countOccurrence(['',7,null,0,'0',false], 0)).to.eql(1);
         expect(countOccurrence(['',7,null,0,'0',false], false)).to.eql(1);
         expect(countOccurrence(['',7,null,0,'0',false], null)).to.eql(1);
-        expect(countOccurrence(['',7,null,0,'0',false], '')).to.eql(1);
-        // expect(countOccurrence(['',7,null,0,NaN,'0',false], NaN)).to.eql(1);
+         expect(countOccurrence(['',7,null,0,'0',false], '')).to.eql(1);
+        expect(countOccurrence(['',7,null, 0,NaN,'0',false], NaN)).to.eql(1);
       });
 
       it('should use recursion by calling self', function () {
